@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Moberg ICU Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/png" href="static/favicon.png">
+    <link rel="stylesheet" type="text/css" href="static/demoClient.css">
+</head>
+<body>
+    <div id="station">
+        <floormap :rooms="rooms" :ranges="ranges"></floormap>
+        <patientlist :rooms="rooms" :active="active"></patientlist>
+        <div class="title">
+            <div class="titleBox">
+                <div class="location" :class="facilityId">{{ title }}</div>
+            </div>
+            <div class = "chart">
+                <canvas id="barChart"></canvas>
+            </div>
+
+            <div class="header1">Standard of Care Adherence: {{shift}} Shift</div>
+            <div class="header2"></div>
+            <div class="partner"></div>
+            <div class="ibm"></div>
+            <div class = "text1"></div>
+            <div class = "text2"></div>
+            <div class = "text3"></div>
+            <div class = "text4"></div>
+            <div class = "custom1"></div>
+            <div class = "custom2"></div>
+            <div class = "custom3"></div>
+            <div class = "custom4"></div>
+            <div class = "custom5"></div>
+            <div class = "custom6"></div>
+            <div class = "custom7"></div>
+            <div class = "custom8"></div>
+            <div class = "custom9"></div>
+            <div class = "custom10"></div>
+            <div class = "custom11"></div>
+            <div class = "custom12"></div>
+            <div class = "custom13">{{custom13}}</div>
+            <div class = "custom14">{{custom14}}</div>
+
+        </div>
+
+        <cards :rooms="rooms" :active="active" :ranges="ranges"></cards>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="static/demoClient.js"></script>
+
+</body>
+</html>

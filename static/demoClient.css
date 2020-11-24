@@ -1,0 +1,767 @@
+@font-face {
+      font-family: 'HelvNeueLight';
+      font-style: normal;
+      font-weight: 400;
+      src: local('HelvNeue Light for IBM Regular'), local('HelvNeue Light for IBM Regular'), url(../static/fonts/helvetica-neue-light.ttf) format('truetype');
+}
+@font-face {
+      font-family: 'HelvNeueMedium';
+      font-style: normal;
+      font-weight: 400;
+      src: local('HelvNeue Medium for IBM Regular'), local('HelvNeue Medium for IBM Regular'), url(../static/fonts/helvetica-neue-medium.ttf) format('truetype');
+}
+@font-face {
+      font-family: 'HelvNeueBold';
+      font-style: normal;
+      font-weight: 400;
+      src: local('HelvNeue Bold for IBM Regular'), local('HelvNeue Bold for IBM Regular'), url(../static/fonts/helvetica-neue-bold.ttf) format('truetype');
+}
+html {
+    font-size: 16px;
+}
+/* ----------- Retina Screens ----------- */
+@media only screen and (max-width: 479px) {
+    html {
+        font-size: 6px;
+    }
+}
+@media only screen and (min-width: 480px) and (max-width: 599px) {
+    html {
+        font-size: 8px;
+    }
+}
+@media only screen and (min-width: 600px) and (max-width: 719px) {
+    html {
+        font-size: 8px;
+    }
+}
+@media only screen and (min-width: 720px) and (max-width: 999px) {
+    html {
+        font-size: 12px;
+    }
+}
+@media screen and (min-width: 1000px) and (max-width: 1199px) { 
+    html {
+        font-size: 14px;
+    }
+}
+@media screen and (min-width: 1200px) and (max-width: 1399px) { 
+    html {
+        font-size: 16px;
+    }
+}
+@media screen and (min-width: 1400px) and (max-width: 1599px) { 
+    html {
+        font-size: 18px;
+    }
+}
+@media screen and (min-width: 1600px) and (max-width: 1919px) { 
+    html {
+        font-size: 20px;
+    }
+}
+@media screen and (min-width: 1920px) { 
+    html {
+        font-size: 22px;
+    }
+}
+body {
+    font-family: 'HelvNeueMedium', sans-serif;
+    background-color: #282828;
+    margin: 0;
+}
+#station {
+    display: flex;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
+    flex-wrap: nowrap;
+}
+
+/* Rooms Map */
+.floormap {
+    width: 75vw;
+    flex-grow: 3;
+}
+.room {
+    position: absolute;
+    width: 8vw;
+    height: 12vw;
+    background-color: #393939;
+    box-shadow: 0 .1vw .6vw 0 rgba(0,0,0,0.75);
+    cursor: pointer;
+}
+
+.room:nth-child(1), .room:nth-child(16) {
+    left: 61.5vw;
+}
+.room:nth-child(2), .room:nth-child(15) {
+    left: 53vw;
+}
+.room:nth-child(3), .room:nth-child(14) {
+    left: 44.5vw;
+}
+.room:nth-child(4), .room:nth-child(13) {
+    left: 36vw;
+}
+.room:nth-child(5), .room:nth-child(12) {
+    left: 27.5vw;
+}
+.room:nth-child(6), .room:nth-child(11) {
+    left: 19vw;
+}
+.room:nth-child(n+7):nth-child(-n+10) {
+    left: 10.5vw;
+}
+
+.room:nth-child(n+1):nth-child(-n+7) {
+    top: 4vw;
+}
+
+.room:nth-child(8) {
+    top: 16.5vw;
+}
+.room:nth-child(9) {
+    top: 29vw;
+}
+.room:nth-child(n+10):nth-child(-n+16) {
+    top: 41.5vw;
+}
+.roomLabel {
+    font-family: 'HelvNeueLight', sans-serif;
+    color: #999;
+    position: absolute;
+    top: .1vw;
+    right: .3vw;
+    font-size: 1rem;
+    text-align: right;
+}
+
+.vitals .hr {
+    width: 3vw;
+    margin: -1vw 0 0 .6vw;
+}
+.vitals .hr:before, .condition:before { 
+    width: 3.1vw;
+    height: 2.8vw;
+    display: inline-block;
+    content: ' ';
+    -webkit-mask: url(heart.svg) no-repeat 50% 50%;
+    mask: url(heart.svg) no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: #00A692;
+    box-shadow: 0 .1vw .6vw 0 rgba(0,0,0,0.75);
+    animation-name: vitals_pulse_animation;
+    animation-duration: 2000ms;
+    transform-origin: 70% 70%;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+.vitals .hr.alert:before, .condition.alert:before { 
+    width: 3vw;
+    height: 2.8vw;
+    display: inline-block;
+    content: ' ';
+    -webkit-mask: url(alert.svg) no-repeat 50% 50%;
+    mask: url(alert.svg) no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: #D32F2F;
+    box-shadow: 0 .1vw .6vw 0 rgba(0,0,0,0.75);
+    animation-name: alert_animation;
+    animation-duration: 4000ms;
+    transform-origin: 70% 70%;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes vitals_pulse_animation {
+    0% { transform: scale(1); opacity: 1; }
+    10% { transform: scale(.99); opacity: .8; }
+    20% { transform: scale(.98); opacity: .6; }
+    30% { transform: scale(.97); opacity: .4; }
+    40% { transform: scale(.96); opacity: .2; }
+    50% { transform: scale(.95); opacity: 0; }
+    60% { transform: scale(.96); opacity: .2; }
+    70% { transform: scale(.97); opacity: .4; }
+    80% { transform: scale(.98); opacity: .6; }
+    90% { transform: scale(.99); opacity: .8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+@keyframes alert_animation {
+    0% { transform: scale(1) rotate(0); opacity: 1; }
+    10% { transform: scale(.98) rotate(5deg); opacity: 1; }
+    20% { transform: scale(.96) rotate(0); opacity: 1; }
+    30% { transform: scale(.98) rotate(-5deg); opacity: 1; }
+    40% { transform: scale(1) rotate(0); opacity: 1; }
+    50% { transform: scale(.98) rotate(5deg); opacity: 1; }
+    60% { transform: scale(.96) rotate(0); opacity: 1; }
+    70% { transform: scale(.98) rotate(-5deg); opacity: 1; }
+    80% { transform: scale(1) rotate(0); opacity: 1; }
+    90% { transform: scale(.98) rotate(5deg); opacity: 1; }
+    100% { transform: scale(.96) rotate(0); opacity: 1; }
+}
+
+.vitals .rate {
+    font-family: 'HelvNeueBold', sans-serif;
+    font-size: 2rem;
+}
+.vitals .tag, .vitals .rate, .vitals .measure {
+    position: absolute;
+}
+.vitals .tag, .vitals .measure {
+    font-family: 'HelvNeueLight', sans-serif;
+    color: #999;
+}
+.vitals .tag {
+    font-size: .6rem;
+}
+.vitals .measure {
+    font-size: .4rem;
+}
+.vitals .tag {
+    left: 1.3vw;
+}
+.vitals .burden .tag {
+    top: 2.2vw;
+}
+.vitals .icp .tag {
+    top: 5.5vw;
+}
+.vitals .pbto2 .tag {
+    top: 8.8vw;
+}
+.vitals .rate {
+    right: 2.5vw;
+    text-align: right;
+}
+.vitals .burden .rate {
+    top: 2.5vw;
+    color: #438d46;
+}
+.vitals .icp .rate {
+    top: 5.8vw;
+    color: #438d46;
+}
+.vitals .pbto2 .rate {
+    top: 9.1vw;
+    color: #438d46;
+}
+.vitals .burden .measure, .vitals .icp .measure, .vitals .pbto2 .measure {
+    right: .5vw;
+}
+.vitals .burden .measure {
+    top: 4.4vw;
+}
+.vitals .icp .measure {
+    top: 7.7vw;
+}
+.vitals .pbto2 .measure {
+    top: 11vw;
+}
+
+
+/* Patient List */
+.patientlist {
+    width: 20vw;
+    flex-grow: 1;
+    margin: 5vw 5vw 0 0;
+}
+.listhead, .patient {
+    display: flex;
+}
+.listhead {
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 1vw;
+}
+.patient {
+    margin: 0.25vw 0;
+    padding: 0.25vw 0;
+    border-bottom: 0.05vw solid #666;
+    cursor: pointer;
+}
+.roomNo {
+    width: 16%;
+    margin-top: .5vw;
+    margin-right: 4%;
+    font-family: 'HelvNeueLight', sans-serif;
+    font-size: 0.8rem;
+    text-align: right;
+    color: #999;
+}
+.patientName {
+    width: 80%;
+    font-size: 1.3rem;
+    color: #CCC;
+}
+.patient.alert .patientName {
+    color: #D32F2F;
+}
+
+/* Patient Cards */
+.cards {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.cards.active {
+    position: absolute;
+    top: 17.5vw;
+    left: 19.6vw;
+}
+.card {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 48vw;
+    height: 19vw;
+    padding: 1vw;
+    background-color: #393939;
+    box-shadow: 0 .1vw .6vw 0 rgba(0,0,0,0.75);
+    z-index: 999;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.card.active {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.roomInfo, .condition, .patientInfo {
+    position: absolute;
+    top: 1.5vw;
+    font-size: 1.5rem;
+    color: #CCC;
+}
+.roomInfo {
+    right: 1.5vw;
+}
+.condition {
+    right: 7vw;
+    width: 3vw;
+}
+.patientInfo {
+    left: 1vw;
+}
+.riLabel, .piLabel {
+    width:  3vw;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: #999;
+}
+.riLabel, .riValue {
+    text-align: right;
+}
+.piRow:nth-child(2) {
+    display: flex;
+    margin-top: 1.5vw;
+}
+.piRow:nth-child(2) .piLabel {
+    width: 3vw;
+    margin-top: 0.7vw;
+}
+.piRow:nth-child(2) .piValue {
+    font-size: 1.5rem;
+}
+.vitalsCard {
+    position: absolute;
+    top: 5.5vw;
+}
+.vitalsCard .vital {
+    position: absolute;
+    display: flex;
+    left: 0;
+    width: 23vw;
+}
+.vitalsCard .tag {
+    width: 2vw;
+    margin-top: 1vw;
+    color: #CCC;
+    font-size: 0.5rem;
+}
+.vitalsCard .rate { 
+    width: 6vw;
+    font-size: 2.2rem;
+    text-align: right;
+}
+.vital:nth-child(n+5) .rate { 
+    width: 4vw;
+}
+.vitalsCard .measure { 
+    width: 2vw;
+    font-size: 0.6rem;
+    margin-top: 32px;
+    padding: 0 5px;
+    text-align: center;
+}
+.vitalsCard .rate, .vitalsCard .measure {
+    margin-bottom: 0.05vw;
+    border-bottom: 0.05vw solid #CCC;
+}
+.vitalsCard .label {
+    display: inline-block;
+    width: 12vw;
+    height: 1.3vw;
+    margin: 0.8vw 0 0.6vw 0;
+    color: #393939;
+    border-radius: 0.6vw;
+    padding: 0.4vw;
+    text-align: center;
+    font-size: .9rem;
+}
+.vitalsCard .hr {
+    top: 0;
+    color: #00A692;
+}
+.vitalsCard .rr {
+    top: 3.5vw;
+    color: #D8AD31;
+}
+.vitalsCard .bp {
+    top: 7vw;
+    color: #BFD4D9;
+}
+.vitalsCard .etco2 {
+    top: 10.5vw;
+    color: #638CA6;
+}
+
+.vitalsCard .tperf, .vitalsCard .spo2, .vitalsCard .perfdeltat, .vitalsCard .perf {
+    left: 17vw;
+}
+.vitalsCard .tperf {
+    top: 0;
+    color: #00A692;
+}
+.vitalsCard .spo2 {
+    top: 3.5vw;
+    color: #D8AD31;
+}
+.vitalsCard .perfdeltat {
+    top: 7vw;
+    color: #BFD4D9;
+}
+.vitalsCard .perf {
+    top: 10.5vw;
+    color: #638CA6;
+}
+
+.vitalsCard .icp, .vitalsCard .cpp, .vitalsCard .pbto2, .vitalsCard .cvp {
+    left: 33vw;
+}
+.vitalsCard .icp {
+    top: 0;
+    color: #00A692;
+}
+.vitalsCard .cpp {
+    top: 3.5vw;
+    color: #D8AD31;
+}
+.vitalsCard .pbto2 {
+    top: 7vw;
+    color: #BFD4D9;
+}
+.vitalsCard .cvp {
+    top: 10.5vw;
+    color: #638CA6;
+}
+
+.vitalsCard .hr .measure { 
+    margin-top: 1.5vw;
+}
+.vitalsCard .hr .measure:before { 
+    width: 1vw;
+    height: 0.9vw;
+    margin-top: -0.1vw;
+    margin-left: 0.5vw;
+    display: block;
+    content: ' ';          
+    -webkit-mask: url(heart.svg) no-repeat 50% 50%;
+    mask: url(heart.svg) no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: #dcae1d;
+}
+.vitalsCard .hr .label {
+    width: 5vw;
+    margin-right: 6vw;
+    background-color: #00A692;
+}
+.vitalsCard .rr .label {
+    width: 5vw;
+    margin-right: 6vw;
+    background-color: #D8AD31;
+}
+.vitalsCard .bp .measure { 
+    margin-top: 0.1vw;
+}
+.vitalsCard .mean {
+    display: block;
+    font-size: 1rem;
+}
+.vitalsCard .bp .rate { 
+    margin-top: 0.8vw;
+    font-size: 1.75rem;
+}
+.vitalsCard .bp .label {
+    width: 5vw;
+    margin-right: 4vw;
+    background-color: #BFD4D9;
+}
+.vitalsCard .etco2 .label {
+    width: 5vw;
+    margin-right: 4.5vw;
+    background-color: #638CA6;
+}
+.vitalsCard .icp .label {
+    width: 5vw;
+    margin-right: 2vw;
+    background-color: #00A692;
+}
+.vitalsCard .cpp .label {
+    width: 5vw;
+    margin-right: 2.5vw;
+    background-color: #D8AD31;
+}
+.vitalsCard .pbto2 .label {
+    width: 5vw;
+    margin-right: 3.5vw;
+    background-color: #BFD4D9;
+}
+.vitalsCard .cvp .label {
+    width: 5vw;
+    margin-right: 4vw;
+    background-color: #638CA6;
+}
+
+.vitalsCard .spo2 .label {
+    width: 5vw;
+    margin-right: 2vw;
+    background-color: #D8AD31;
+}
+.vitalsCard .tperf .label {
+    width: 5vw;
+    margin-right: 2.5vw;
+    background-color: #00A692;
+}
+.vitalsCard .perfdeltat .label {
+    width: 5vw;
+    margin-right: 3.5vw;
+    background-color: #BFD4D9;
+}
+.vitalsCard .perf .label {
+    width: 5vw;
+    margin-right: 4vw;
+    background-color: #638CA6;
+}
+
+@keyframes card_pulse_animation {
+    0% { transform: scale(1); opacity: 1; }
+    10% { transform: scale(.99); opacity: .8; }
+    20% { transform: scale(.98); opacity: .6; }
+    30% { transform: scale(.97); opacity: .4; }
+    40% { transform: scale(.96); opacity: .2; }
+    50% { transform: scale(.95); opacity: 0; }
+    60% { transform: scale(.96); opacity: .2; }
+    70% { transform: scale(.97); opacity: .4; }
+    80% { transform: scale(.98); opacity: .6; }
+    90% { transform: scale(.99); opacity: .8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.vitalsCard .pulse:before {
+    animation-name: card_pulse_animation;
+    animation-duration: 1500ms;
+    transform-origin: 70% 70%;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes card_labelChanged_animation {
+    0% { opacity: 1; }
+    10% { opacity: .8; }
+    20% { opacity: .6; }
+    30% { opacity: .4; }
+    40% { opacity: .2; }
+    50% { opacity: 0; }
+    60% { opacity: .2; }
+    70% { opacity: .4; }
+    80% { opacity: .6; }
+    90% { opacity: .8; }
+    100% { opacity: 1; }
+}
+.rate.changed {
+    animation-name: card_labelChanged_animation;
+    animation-duration: 500ms;
+    transform-origin: 70% 70%;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}
+.vitalsCard .label.changed, .vitalsCard .label.dchanged, .vitalsCard .label.mchanged {
+    animation-name: card_labelChanged_animation;
+    animation-duration: 500ms;
+    transform-origin: 70% 70%;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}
+.vitalsCard .measure {
+    color: #999;
+}
+.vitalsCard .measure .mean {
+    color: #BFD4D9;
+}
+.vitalsCard .alert, .room .vitals .alert {
+    color: #b42f2f;
+}
+/*.vitalsCard .label.alert, .vitalsCard .label.dalert, .vitalsCard .label.malert {*/
+/*    color: #393939;*/
+/*    background-color: #b42f2f;*/
+/*}*/
+
+/* Title */
+.title {
+    position: absolute;
+    top: 19vw;
+    left: 21vw;
+    width: 46vw;
+    height: 17vw;
+    padding: 1vw;
+    /*text-align: center;*/
+    background-color: #222;
+    border: 3px inset #333;
+    opacity: 1;
+    transition: opacity 0.5s;
+    box-shadow: 0 .1vw .6vw 0 rgba(0,0,0,0.75);
+}
+
+.titleBox {
+    position: absolute;
+    top: .1vw;
+    left: 12vw;
+    display: flex;
+    width: 25vw;
+    height: 5vw;
+    align-items: center;
+    justify-content: center;
+}
+.location {
+    font-family: 'HelvNeueLight', sans-serif;
+    font-size: 2.5rem;
+    color: #435aa4;
+
+}
+
+.header1, .header2, .shift{
+    position: absolute;
+    justify-content: left;
+    font-family: 'HelvNeueLight', sans-serif;
+    font-size: 1.4rem;
+    color: #b6b6b6;
+    width: 40vw;
+    height: 5vw;
+    left: 9vw;
+    top: 7vh;
+}
+.shift {
+    left: 18vw;
+}
+
+.header2 {
+    left: 10vw;
+}
+
+.partner, .ibm {
+    position: absolute;
+    bottom: 14vw;
+}
+.partner {
+    left: 1.5vw;
+    width: 9vw;
+    height: 5vw;
+    background: url(../static/moberg_logo.svg);
+    background-repeat: no-repeat;
+    background-size: 9vw 5vw;
+}
+.ibm {
+    right: 1.5vw;
+    width: 6vw;
+    height: 5vw;
+    background: url(../static/ibm_logo.svg);
+    background-repeat: no-repeat;
+    background-size: 6vw 5vw;
+}
+
+.custom1, .custom2, .custom3, .custom4, .custom5, .custom6, .custom7,
+.custom8, .custom9, .custom10, .custom11, .custom12, .custom13, .custom14,
+.text1, .text2, .text3, .text4 {
+    color: #dcdcdc;
+    position: absolute;
+    width: 9vw;
+    font-size: .8rem;
+    display: inline-block;
+    margin: 0.8vw 0 0.6vw 0;
+    border-radius: 0.6vw;
+    padding: 0.4vw;
+    left: 1vw;
+    top: 1vh;
+    text-align: right;
+}
+
+.custom1, .custom4, .custom7, .custom10 {
+    /*color: #435aa4;*/
+    left: -10vw;
+}
+
+.custom2, .custom5, .custom8, .custom11 {
+    /*color: #438d46;*/
+    left: 11vw;
+}
+
+.custom3, .custom6, .custom9, .custom12 {
+    /*color: #D32F2F;*/
+    left: 30.5vw;
+}
+
+.custom1, .custom2, .custom3, .text1 {
+    top: 10vh;
+}
+
+.custom4, .custom5, .custom6, .text2 {
+    top: 14vh;
+}
+
+.custom7, .custom8, .custom9, .text3 {
+    top: 18vh;
+}
+
+.custom10, .custom11, .custom12, .text4 {
+    top: 22vh;
+}
+
+.custom13, .custom14{
+    font-family: 'HelvNeueLight', sans-serif;
+    color: #a8a8a8;
+    font-size: .7rem;
+    text-align: left;
+    top: 29vh;
+}
+
+.custom13{
+    left: 1vw;
+}
+.custom14 {
+    left: 38vw;
+}
+
+.text1, .text2, .text3, .text4 {
+    left: -6vw;
+}
+
+.chart {
+    position: relative;
+    left: 1vw;
+    top: 1vh;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="554px" height="134px" viewBox="0 0 554 134" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Moberg logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Moberg-logo" transform="translate(-18.000000, -19.000000)">
+            <text id="MOBERG" font-family="Arial-BoldMT, Arial" font-size="111" font-weight="bold" letter-spacing="-6" fill="#4A4A4A">
+                <tspan x="109" y="100">MOBER</tspan>
+                <tspan x="492.160645" y="100">G</tspan>
+            </text>
+            <text id="ICU-Solutions" font-family="Arial-BoldMT, Arial" font-size="59" font-weight="bold" letter-spacing="-3" fill="#666666">
+                <tspan x="113" y="152">ICU Solution</tspan>
+                <tspan x="430.942383" y="152">s</tspan>
+            </text>
+            <rect id="Rectangle" fill="#4A4A4A" x="18" y="21" width="82" height="131"></rect>
+            <rect id="Rectangle" fill="#666666" x="28" y="31" width="62" height="59"></rect>
+        </g>
+    </g>
+</svg>
