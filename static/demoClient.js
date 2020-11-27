@@ -532,7 +532,7 @@ var eventBus = new Vue();
   })
 
 // Socket.io set the path to the server
-  var socket = io('ws://169.48.143.91:8080');
+  var socket = io('ws://localhost:5000');
 
 //creation of room objects that will be replaced once rooms array has been broadcasted from server
   const rooms = [{
